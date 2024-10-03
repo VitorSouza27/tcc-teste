@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicações de Livros</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <style>
+        /* Add your existing styles here */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: calc(100vh - 60px);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px; /* Adicionando padding */
+        }
+
+        .titulo {
+            border-bottom: 3px solid white;
+            margin-bottom: 20px;
+            padding: 24px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .titulo h1 {
+            margin: 0;
+            font-weight: bold;
+            font-size: 36px;
+        }
+
+        .botao-indicacao-pesquisa {
+            display: flex;
+            flex-direction: column; /* Muda para coluna para centralizar em telas pequenas */
+            align-items: center; /* Centraliza o conteúdo */
+            margin-bottom: 20px;
+        }
+
+        .barra-pesquisa {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza horizontalmente */
+            width: 100%; /* O campo ocupa toda a largura */
+        }
+
+        .barra-pesquisa input {
+            padding: 15px; /* Ajuste de padding */
+            border-radius: 5px 0 0 5px;
+            border: none;
+            width: 100%; /* Ocupa toda a largura disponível */
+            max-width: 300px; /* Limite de largura */
+            height: 50px; /* Aumenta a altura */
+            font-size: 18px; /* Ajuste de fonte */
+            margin-right: -1px; /* Para evitar bordas duplas com o botão */
+        }
+
+        .caixa-icone-pesquisa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(151, 151, 151);
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .caixa-icone-pesquisa i {
+            color: #ffffff;
+        }
+
+        .caixa-icone-pesquisa:hover {
+            background-color: rgb(94, 94, 94);
+        }
+
+        .lista-livro {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: #003366;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .titulo-livro {
+            font-weight: bold;
+            font-size: 18px;
+            flex: 1;
+        }
+
+        .livro-item {
+            flex: 1;
+        }
+
+        .botao-ver {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .botao-ver:hover {
+            background-color: #002244;
+        }
+
+        .sem-resultados {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* Media Queries */
+        @media (min-width: 768px) {
+            .botao-indicacao-pesquisa {
+                flex-direction: row; /* Volta para linha em telas maiores */
+                justify-content: space-between; /* Espaçamento entre os elementos */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <%- include('./navbar.ejs', { activePage: 'indicacoesLivroAdm' }) %>
+    </header>
+
+    <main class="container">
+        <div class="titulo">
+            <h1>Indicações de Livros</h1>
+        </div>
+
+        <div class="botao-indicacao-pesquisa">
+            <form action="/pesquisarIndicacaoLivro" method="GET">
+                <div class="barra-pesquisa">
+                    <input type="text" id="barra-pesquisa" name="pesquisarLivro" placeholder="Pesquisar" autocomplete="off">
+                    <button type="submit" class="caixa-icone-pesquisa" aria-label="Pesquisar">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <% if (indicacao_livro.length === 0) { %>
+            <div class="sem-resultados">
+                <p>A pesquisa não correspondeu a nenhuma Indicação.</p>
+            </div>
+        <% } else { %>
+            <% indicacao_livro.forEach(livro => { %>
+                <div class="lista-livro">
+                    <span class="titulo-livro">
+                        <%= livro.titulo %>
+                    </span>
+                    <div class="livro-item">
+                        <span class="livro-details">
+                            Status: <%= livro.status_indicacao === 1 ? 'Indicação Aceita' : 'Indicação Pendente' %>
+                        </span>
+                    </div>
+                    <form action="/verIndicacaoLivroAdm" method="GET">
+                        <input type="hidden" name="tituloLivroIndicacao" value="<%= livro.cod_indicacao_livro %>">
+                        <button class="botao-ver" type="submit">Ver</button>
+                    </form>
+                </div>
+            <% }); %>
+        <% } %>
+    </main>
+
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'indicacoesLivroAdm' }) %>
+    </footer>
+</body>
+
+</html>

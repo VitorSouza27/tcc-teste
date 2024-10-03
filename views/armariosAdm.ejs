@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armários</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: calc(100vh - 60px);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .titulo {
+            border-bottom: 3px solid white;
+            margin-bottom: 20px;
+            padding: 24px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .titulo h1 {
+            margin: 0;
+            font-weight: bold;
+            font-size: 36px;
+        }
+
+        .botao-indicacao-pesquisa {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .adicionar-armario {
+            height: 50px;
+            font-size: 20px;
+            padding: 2px 20px;
+            background: none;
+            color: #fff;
+            border-radius: 10px;
+            border: 2px solid #ffffff;
+            transition: 0.6s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .adicionar-armario:hover {
+            background-color: #2d3f52;
+            color: #fff;
+            border: 2px solid white;
+        }
+
+        .barra-pesquisa {
+            display: flex;
+            align-items: center;
+        }
+
+        .barra-pesquisa input {
+            padding: 25px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            width: 200px;
+            height: 30px;
+            font-size: 20px;
+        }
+
+        .caixa-icone-pesquisa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(151, 151, 151);
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .caixa-icone-pesquisa i {
+            color: #ffffff;
+        }
+
+        .caixa-icone-pesquisa:hover {
+            background-color: rgb(94, 94, 94);
+        }
+
+        .lista-armario {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: #003366;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .titulo-armario {
+            font-weight: bold;
+            font-size: 18px;
+            flex: 1;
+        }
+
+        .armario-item {
+            flex: 1;
+        }
+
+        .botao-ver {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .botao-ver:hover {
+            background-color: #002244;
+        }
+
+        .sem-resultados {
+            text-align: center;
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .botao-indicacao-pesquisa {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+
+            .barra-pesquisa {
+                margin-top: 10px;
+            }
+
+            .adicionar-usuario {
+                width: 100%;
+            }
+
+            .barra-pesquisa input {
+                width: calc(100% - 50px);
+                font-size: 14px;
+            }
+
+            .lista-usuario {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .titulo h1 {
+                font-size: 28px;
+            }
+
+            .adicionar-usuario {
+                font-size: 16px;
+                padding: 5px 15px;
+            }
+
+            .barra-pesquisa input {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<header>
+    <%- include('./navbar.ejs', { activePage: 'armariosAdm' }) %>
+</header>
+
+<body>
+    <div class="container">
+        <div class="titulo">
+            <h1>Armários</h1>
+        </div>
+        <div class="botao-indicacao-pesquisa">
+            <form action="/RegistrarmarioAdm" method="GET">
+                <button class="adicionar-armario" id="adicionar-armario">Registrar Armário</button>
+            </form>
+            <form action="/pesquisarArmariosAdm" method="GET">
+                <div class="barra-pesquisa">
+                    <input type="text" id="barra-pesquisa" name="pesquisarArmariosAdm" placeholder="Pesquisar">
+                    <button type="submit" class="caixa-icone-pesquisa">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <% if (armario.length > 0) { %>
+            <% armario.forEach(armario => { %>
+                <div class="lista-armario">
+                    <span class="titulo-armario">
+                        Código: <%= armario.cod_armario %>
+                    </span>
+                    <div class="armario-item">
+                        <span class="armario-details">
+                            <%= armario.status_armario === 1 ? 'Em uso' : 'Livre' %>
+                        </span>
+                    </div>
+                    <form action="/verArmariosAdm" method="GET">
+                        <input type="hidden" name="numeroArmario" value="<%= armario.cod_armario %>">
+                        <button class="botao-ver" type="submit">Ver</button>
+                    </form>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="sem-resultados">
+                <p>Nenhuma ocorrência encontrada.</p>
+            </div>
+        <% } %>
+    </div>
+</body>
+
+<footer>
+    <%- include('./footer.ejs', { activePage: 'armariosAdm' }) %>
+</footer>
+
+</html>
+

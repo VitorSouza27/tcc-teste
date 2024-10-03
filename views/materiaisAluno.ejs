@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiais</title>
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        /* Estilos globais */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+            /* Aplica uma sobreposição escura */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        footer {
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            min-height: calc(100vh - 60px);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .titulo {
+            border-bottom: 3px solid white;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .titulo h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .secao-pesquisa {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .barra-pesquisa {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0%;
+        }
+
+        .barra-pesquisa input {
+            padding: 25px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            width: 100%;
+            max-width: 400px;
+            height: 30px;
+            font-size: 1rem;
+        }
+
+        .caixa-icone-pesquisa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(151, 151, 151);
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .caixa-icone-pesquisa i {
+            color: #ffffff;
+        }
+
+        .caixa-icone-pesquisa:hover {
+            background-color: rgb(94, 94, 94);
+        }
+
+        .lista-material {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: #003366;
+            padding: 15px;
+            border-radius: 5px;
+            flex-wrap: wrap;
+        }
+
+        .titulo-material {
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .botao-ver {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
+
+        .botao-ver:hover {
+            background-color: #002244;
+        }
+
+        .sem-resultados {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .barra-pesquisa input {
+                font-size: 0.875rem;
+                height: 40px;
+                padding: 25px;
+            }
+
+            .titulo h1 {
+                font-size: 1.5rem;
+            }
+
+            .botao-ver {
+                padding: 10px;
+                font-size: 0.875rem;
+            }
+
+            .titulo-material {
+                font-size: 1rem;
+            }
+
+            .secao-pesquisa {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .titulo h1 {
+                font-size: 1.25rem;
+            }
+
+            .botao-ver {
+                padding: 8px;
+                font-size: 0.75rem;
+            }
+
+            .titulo-material {
+                font-size: 0.875rem;
+            }
+
+            .barra-pesquisa input {
+                font-size: 0.75rem;
+                height: 30px;
+                padding: 25px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <%- include('./navbarAluno.ejs', { activePage: 'materiaisAluno' }) %>
+    </header>
+
+    <div class="container">
+        <div class="titulo">
+            <h1>Materiais</h1>
+        </div>
+
+        <div class="secao-pesquisa">
+            <form action="/pesquisarMaterial" method="GET">
+                <div class="barra-pesquisa">
+                    <input type="text" id="search-input" name="pesquisarMaterial" placeholder="Pesquisar">
+                    <button type="submit" class="caixa-icone-pesquisa">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <% if (materiais.length===0) { %>
+        <div class="sem-resultados">
+            <p>A pesquisa não correspondeu a nenhum item.</p>
+        </div>
+        <% } else { %>
+        <% materiais.forEach(material=> { %>
+        <div class="lista-material">
+            <span class="titulo-material">
+                <%= material.nome_material %>
+            </span>
+            <form action="/verMateriaisAluno" method="GET">
+                <input type="hidden" name="nomeMaterial" value="<%= material.nome_material %>">
+                <button class="botao-ver" type="submit">Ver</button>
+            </form>
+        </div>
+        <% }); %>
+        <% } %>
+    </div>
+
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'materiaisAluno' }) %>
+    </footer>
+</body>
+
+</html>

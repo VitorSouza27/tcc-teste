@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrada</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <%- include('./navbarAluno.ejs', { activePage: 'livrosAluno' }) %> <!-- Navbar -->
+    </header>
+
+    <div class="titulo">
+        <h1>Adicionar Indicação de Livro</h1> <!-- Título da página -->
+    </div>
+
+    <div class="container">
+        <!-- Formulário para Adicionar Indicação -->
+        <form action="/inserirIndicacaoAluno" method="post">
+            <!-- Campo oculto para armazenar o cod_usuario -->
+            <input type="hidden" name="cod_usuario" value="<%= cod_usuario %>"> 
+
+            <!-- Campo para o título do livro -->
+            <h2>Título do Livro</h2>
+            <div class="indicacao-detalhes">
+                <input type="text" name="titulo" placeholder="Título do Livro" required>
+            </div>
+
+            <!-- Campo para o autor do livro -->
+            <h2>Autor</h2>
+            <div class="indicacao-detalhes">
+                <input type="text" name="autor" placeholder="Autor do Livro" required>
+            </div>
+
+            <!-- Campo para o gênero do livro -->
+            <h2>Gênero</h2>
+            <div class="indicacao-detalhes">
+                <input type="text" name="genero" placeholder="Gênero do Livro" required>
+            </div>
+
+            <!-- Campo para descrição do livro -->
+            <h2>Descrição</h2>
+            <div class="indicacao-detalhes">
+                <textarea name="descricao" placeholder="Descrição da Indicação" required></textarea>
+            </div>
+
+            <!-- Campo para o status da indicação -->
+            <h2>Status da Indicação</h2>
+            <div class="indicacao-detalhes">
+                
+                    <option value="0">Não Recomendado</option>
+    
+            </div>
+
+            <!-- Botões de Voltar e Adicionar -->
+            <div class="voltar-adicionar">
+                <a href="/livrosAluno" class="voltar-link">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="voltar-link">
+                    <i class="fa fa-save"></i> Adicionar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'livrosAluno' }) %>
+    </footer>
+</body>
+</html>
+
+<!-- Estilos para a página -->
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        background-color: #003366;
+        color: white;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 20px;
+        color: black;
+        background-color: aliceblue;
+        border-radius: 10px;
+    }
+
+    .titulo {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .titulo h1 {
+        margin: 0;
+        color: #ffffff;
+    }
+
+    .voltar-adicionar {
+        margin: 20px 10px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .voltar-link {
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        background-color: #004080;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        border: 2px solid transparent;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .voltar-link:hover {
+        background-color: #003366;
+        transform: scale(1.05);
+    }
+
+    .fa-arrow-left, .fa-save {
+        margin-right: 8px;
+    }
+
+    .container h2 {
+        color: #003366;
+        margin: 10px 0px 0px 10px;
+        font-size: 20px;
+    }
+
+    .indicacao-detalhes {
+        width: 700px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+        border-style: none;
+        width: calc(100% - 20px);
+        padding: 10px;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    textarea {
+        height: 100px;
+    }
+
+    footer {
+        text-align: center;
+        color: #333;
+        font-size: 0.9em;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+</style>

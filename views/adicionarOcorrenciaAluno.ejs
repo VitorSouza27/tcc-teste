@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Ocorrência</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <%- include('./navbarAluno.ejs', { activePage: 'ocorrenciasAluno' }) %>
+    </header>
+
+    <div class="titulo">
+        <h1>Adicionar Ocorrência</h1>
+    </div>
+
+    <div class="container">
+        <form action="/inserirOcorrenciasAluno" method="post">
+          <input type="hidden" name="cod_usuario" value="<%= cod_usuario %>">
+            
+            <h2>Eletrodoméstico</h2>
+            <div class="ocorrencia-detalhes">
+                <select name="cod_eletrodomestico" required>
+                    <% eletrodomesticos.forEach(eletrodomestico => { %>
+                        <option value="<%= eletrodomestico.cod_eletrodomestico %>"><%= eletrodomestico.nome_eletrodomestico %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <h2>Data da Ocorrência</h2>
+            <div class="ocorrencia-detalhes">
+                <input type="date" name="data_ocorrencia" required>
+            </div>
+            
+            <h2>Detalhes</h2>
+            <div class="ocorrencia-detalhes">
+                <textarea name="detalhes_ocorrencia" placeholder="Detalhes da Ocorrência" required></textarea>
+            </div>
+            
+            <h2>Status</h2>
+            <div class="ocorrencia-detalhes">
+                <select name="status_ocorrencia" required>
+                    <option value="0">Quebrado</option>
+                    <!-- Adicione outras opções conforme necessário -->
+                </select>
+            </div>
+            
+            
+            <div class="voltar-adicionar">
+                <a href="/ocorrenciasAluno" class="voltar-link">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="voltar-link">
+                    <i class="fa fa-save"></i> Adicionar
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'ocorrenciasAluno' }) %>
+    </footer>
+</body>
+
+</html>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #003366;
+    color: white;
+}
+
+.container {
+    margin: 20px auto;
+    padding: 20px;
+    color: black;
+    background-color: aliceblue;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
+}
+
+.titulo {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.titulo h1 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.voltar-adicionar {
+    margin: 20px 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.voltar-link, .inserir-link {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    background-color: #004080;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.voltar-link:hover, .inserir-link:hover {
+    background-color: #003366;
+    transform: scale(1.05);
+}
+
+.fa-arrow-left, .fa-save {
+    margin-right: 8px;
+}
+
+.container h2 {
+    color: #003366;
+    margin: 10px 0px 0px 10px;
+    font-size: 20px;
+}
+
+.ocorrencia-detalhes {
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    border-style: none;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+textarea {
+    height: 100px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        width: 90%;
+    }
+
+    .voltar-link, .inserir-link {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    .titulo h1 {
+        font-size: 24px;
+    }
+
+    .container h2 {
+        font-size: 18px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+        width: calc(100% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .voltar-adicionar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .voltar-link, .inserir-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ocorrencia-detalhes {
+        width: 100%;
+    }
+
+    textarea {
+        height: 80px;
+    }
+}
+
+footer {
+    text-align: center;
+    color: #333;
+    font-size: 0.9em;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+</style>

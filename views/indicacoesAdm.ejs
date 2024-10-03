@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicações</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <style>
+        /* Estilos personalizados */
+        body {
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+            background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* Adicionar no CSS existente */
+
+/* Estilo para o navbar */
+header {
+    position: relative;  /* Garantir que o z-index seja aplicado */
+    z-index: 1000;       /* Definir um valor alto para sobrepor os cards */
+}
+
+
+        .container {
+            flex-grow: 1; /* Faz o conteúdo expandir e empurra o rodapé para baixo */
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .welcome-title {
+            border-bottom: 3px solid white;
+            padding: 24px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+            height: 400px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            border-radius: 10px 10px 0 0;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card-body h5 {
+            margin-bottom: 35px;
+        }
+
+        .card-body p {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        
+
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <%- include('./navbar.ejs', { activePage: 'pagInicial' }) %>
+        </div>
+    </header>
+
+    <div class="container text-center">
+        <!-- Título de boas-vindas -->
+        <h1 class="welcome-title">Indicações</h1>
+
+        <!-- Cards -->
+        <div class="card-container">
+            <!-- Card 3 -->
+            <div class="card">
+                <img src="https://www.fiemg.com.br/senai/wp-content/uploads/sites/12/2023/08/MicrosoftTeams-image-47.jpg"
+                    class="card-img-top" alt="Imagem 1">
+                <div class="card-body">
+                    <h5 class="card-title">Indicações de livros</h5>
+                    <p class="card-text">Aprove ou negue indicações</p>
+                    <a href="/indicacoesLivroAdm" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="card">
+                <img src="https://www.fiemg.com.br/senai/wp-content/uploads/sites/12/2023/08/MicrosoftTeams-image-47.jpg"
+                    class="card-img-top" alt="Imagem 2">
+                <div class="card-body">
+                    <h5 class="card-title">Indicações de Materiais</h5>
+                    <p class="card-text">Confira as indicações de materiais.</p>
+                    <a href="/indicacoesMateriaisAdm" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="card">
+                <img src="https://www.fiemg.com.br/senai/wp-content/uploads/sites/12/2023/08/MicrosoftTeams-image-47.jpg"
+                    class="card-img-top" alt="Imagem 3">
+                <div class="card-body">
+                    <h5 class="card-title">Indicações de Eventos</h5>
+                    <p class="card-text">Confira as indicações de Eventos</p>
+                    <a href="/indicacoesEventosAdm" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'pagInicial' }) %>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

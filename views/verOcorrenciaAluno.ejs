@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Ocorrência</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <%- include('./navbarAluno.ejs', { activePage: 'ocorrenciasAluno' }) %>
+    </header>
+
+    <div class="titulo">
+        <h1>Detalhes da Ocorrência</h1>
+    </div>
+
+    <div class="container">
+        <h2>Eletrodoméstico</h2>
+        <div class="ocorrencia-detalhes">
+            <h3>
+                <%= ocorrencia.nome_eletrodomestico %>
+            </h3>
+        </div>
+        <h2>Data da Ocorrência</h2>
+        <div class="ocorrencia-detalhes">
+            <h3>
+                <%= formatDate(ocorrencia.data_ocorrencia) %>
+            </h3>
+        </div>
+        <h2>Usuário que Indicou</h2>
+        <div class="ocorrencia-detalhes">
+            <h3>
+                <%=  ocorrencia.nome_usuario || 'Usuário não informado' %>
+            </h3>
+        </div>
+        <h2>Detalhes</h2>
+        <div class="ocorrencia-detalhes">
+            <h3>
+                <%= ocorrencia.detalhes_ocorrencia %>
+            </h3>
+        </div>
+        <h2>Status</h2>
+        <div class="ocorrencia-detalhes">
+            <h3>
+                <%= ocorrencia.status_ocorrencia===1 ? 'Arrumado' : 'Não Arrumado' %>
+            </h3> <!--1 é arrumado, 0 não arrumado-->
+        </div>
+          <div class="voltar">
+        <a href="/ocorrenciasAluno" class="voltar-link">
+            <i class="fa fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+    </div>
+
+  
+
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'ocorrenciasAluno' }) %>
+    </footer>
+
+    <% function formatDate(date) { var d=new Date(date); var day=('0' + d.getDate()).slice(-2); var month=('0' +
+        (d.getMonth() + 1)).slice(-2); var year=d.getFullYear(); return day + '/' + month + '/' + year; } %>
+</body>
+
+</html>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: #003366;
+        color: white;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .titulo {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .titulo h1 {
+        margin: 0;
+        color: #ffffff;
+    }
+
+    .voltar {
+        margin: 20px 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .voltar-link {
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        background-color: #004080;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        border: 2px solid transparent;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .voltar-link:hover {
+        background-color: #003366;
+        transform: scale(1.05);
+    }
+
+    .fa-arrow-left {
+        margin-right: 8px;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 800px;
+        color: black;
+        background-color: aliceblue;
+        border-radius: 10px;
+    }
+
+    .container h2 {
+        color: #003366;
+        margin: 10px 0px 0px 10px;
+        font-size: 20px;
+    }
+
+    .ocorrencia-item,
+    .ocorrencia-detalhes {
+        padding: 5px;
+        margin: 7px;
+        width: 700px;
+        border-radius: 10px;
+        background-color: #ffffff;
+    }
+
+    .ocorrencia-item h3,
+    .ocorrencia-detalhes h3 {
+        margin-left: 10px;
+        color: #003366;
+    }
+
+    footer {
+            text-align: center;
+            color: #333;
+            font-size: 0.9em;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+        }
+        @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        width: 90%;
+    }
+
+    .voltar-link, .inserir-link {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    .titulo h1 {
+        font-size: 24px;
+    }
+
+    .container h2 {
+        font-size: 18px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+        width: calc(100% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .voltar-adicionar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .voltar-link, .inserir-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ocorrencia-detalhes {
+        width: 100%;
+    }
+
+    textarea {
+        height: 80px;
+    }
+}
+
+</style>

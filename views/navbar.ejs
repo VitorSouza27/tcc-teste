@@ -1,0 +1,163 @@
+<nav>
+    <div class="logo">
+        <img src="./img/aapm_logo_cortada.png" href="pagInicialAdm.ejs" alt="Logo">
+    </div>
+
+    <div class="menu-btn">
+        <i class="fa fa-bars fa-2x" onclick="menuShow()"></i>
+    </div>
+
+    <ul>
+        <li> <a class="nav-item <%= activePage === 'armario' ? 'active' : '' %>" href="/armariosAdm">Armários</a> </li>
+        <li> <a class="nav-item <%= activePage === 'eventos' ? 'active' : '' %>" href="/eventosAdm">Eventos </a> </li>
+        <li> <a class="nav-item <%= activePage === 'eletrodomestico' ? 'active' : '' %>" href="/solicitacoesAdm">Solicitações</a> </li>
+        <li> <a class="nav-item <%= activePage === 'eletrodomestico' ? 'active' : '' %>" href="/indicacoesAdm">Indicações</a> </li>
+        <li> <a class="nav-item <%= activePage === 'eletrodomestico' ? 'active' : '' %>" href="/eletrodomestico">Eletrodoméstico </a> </li>
+        <li> <a class="nav-item <%= activePage === 'usuario' ? 'active' : '' %>" href="/usuariosAdm">Usuários </a> </li>
+        <li> <a class="nav-item <%= activePage === 'indicacao' ? 'active' : '' %>" href="/livro">Livros </a> </li>
+        <li> <a class="nav-item <%= activePage === 'material' ? 'active' : '' %>" href="/material">Materiais</a> </li>
+        <li> <a class="nav-item <%= activePage === 'estoque' ? 'active' : '' %>" href="/camisetas">Camisetas</a> </li>
+        <li> <a class="nav-item <%= activePage === 'ocorrencia' ? 'active' : '' %>" href="/ocorrencia">Ocorrências</a> </li>
+        <li> <a class="nav-item <%= activePage === 'trocarSenha' ? 'active' : '' %>" href="/trocarSenha">Trocar Senha</a> </li>
+        <li> <a class="nav-item <%= activePage === 'sair' ? 'active' : '' %>" href="/sair"> Sair</a> </li>
+    </ul>
+</nav>
+<script src="main.js"></script>
+</body>
+</html>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,200;1,300;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+nav {
+    display: flex;
+    height: 90px;
+    width: 100%;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+nav .logo img {
+    height: 50px;
+    width: auto;
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: auto;
+}
+
+nav ul li {
+    margin: 0 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav ul li:hover {
+    transform: translateY(-5px);
+}
+
+nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover {
+    background: #193361;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+nav .menu-btn i {
+    color: #0a0a0a;
+    cursor: pointer;
+    display: none;
+    transition: color 0.3s ease;
+}
+
+nav .menu-btn i:hover {
+    color: #0773ee;
+}
+
+@media (max-width: 1383px) {
+    nav .menu-btn i {
+        display: block;
+    }
+    
+    nav ul {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        background-color: #f5f8f8;
+        height: calc(100vh - 80px); /* Ajuste a altura para considerar a altura do menu */
+        width: 100%;
+        text-align: center;
+        display: block;
+        transition: left 0.3s ease;
+        overflow-y: scroll; /* Força a barra de rolagem */
+    }
+
+    nav ul.open {
+        left: 0;
+    }
+
+    nav ul li {
+        width: 100%;
+        margin: 30px 0; /* Diminui a margem para garantir que o espaço não seja excessivo */
+    }
+
+    nav ul li a {
+        font-size: 23px;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        background: #0773ee;
+        color: #ffffff;
+        transform: scale(1.05);
+    }
+}
+
+/* Classe para desabilitar o scroll */
+.no-scroll {
+    overflow: hidden; /* Desabilita o scroll */
+}
+</style>
+
+<script>
+var ul = document.querySelector('nav ul');
+var menuBtn = document.querySelector('.menu-btn i');
+var body = document.body; // Seleciona o body
+
+function menuShow() {
+    if (ul.classList.contains('open')) {
+        ul.classList.remove('open');
+        body.classList.remove('no-scroll'); // Remove a classe que desabilita o scroll
+    } else {
+        ul.classList.add('open');
+        body.classList.add('no-scroll'); // Adiciona a classe que desabilita o scroll
+    }
+}
+</script>

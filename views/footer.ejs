@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodapé com Animação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos para o rodapé */
+        .footer {
+            background: linear-gradient(135deg, #ffffff, #ffffff); /* Gradiente de branco para cinza claro */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+            color: #333;
+            font-size: 0.9em;
+            width: 100%;
+            bottom: 0;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-text {
+            margin: 0;
+            animation: pulse 2s infinite; /* Aplicando a animação de pulsação ao texto */
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .social-icons {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Espaçamento ajustado entre ícones */
+        }
+
+        .social-icons a {
+            color: #333;
+            font-size: 1.5em; /* Tamanho do ícone ajustado */
+            padding: 8px; /* Espaço ao redor do ícone ajustado */
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #007BFF; /* Cor de destaque ao passar o mouse */
+            transform: scale(1.2) rotate(10deg); /* Aumento e rotação ao passar o mouse */
+        }
+
+        /* Adiciona um pouco de espaço ao conteúdo da página para rolar */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            height: 1500px; /* Simula um conteúdo longo para a rolagem */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<!-- Rodapé -->
+<div class="footer" id="footer">
+    <p class="footer-text">&copy; 2024 AAPM. Todos os direitos reservados.</p>
+    <!-- Social Media Section -->
+    <div class="social-icons">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/1147486589" target="_blank" class="btn btn-link btn-floating text-body m-1" role="button">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/aapm.senaisuzano124" target="_blank" class="btn btn-link btn-floating text-body m-1" role="button">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        
+        <!-- Gmail -->
+        <a href="mailto:aapm124@gmail.com" class="btn btn-link btn-floating text-body m-1" role="button" target="_blank">
+            <i class="fas fa-envelope"></i>
+        </a>
+        
+        <!-- Instagram -->
+        <a href="#!" class="btn btn-link btn-floating text-body m-1" role="button">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('scroll', function() {
+        const footer = document.getElementById('footer');
+        const footerPosition = footer.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (footerPosition < windowHeight) {
+            footer.classList.add('visible');
+        }
+    });
+</script>
+
+</body>
+</html>

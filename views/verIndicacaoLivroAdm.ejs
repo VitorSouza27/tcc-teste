@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Indicação Livro</title>
+    <!-- Link para ícones do Font Awesome -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #003366;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Container principal */
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+            color: black;
+            background-color: aliceblue;
+            border-radius: 10px;
+            box-sizing: border-box;
+            flex-grow: 1;
+        }
+
+        /* Títulos */
+        .container h2 {
+            color: #003366;
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .indicacao_livro-detalhes,
+        .detalhes {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+
+        .indicacao_livro-detalhes h3,
+        .detalhes h3 {
+            margin: 0;
+            color: #003366;
+        }
+
+        /* Botões de ação (voltar, negar, aprovar) */
+        .voltar-adicionar {
+            margin: 20px 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .voltar-link {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            background-color: #004080;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .voltar-link:hover {
+            background-color: #003366;
+            transform: scale(1.05);
+        }
+
+        .fa-arrow-left,
+        .fa-x,
+        .fa-check {
+            margin-right: 8px;
+        }
+
+        /* Estilos do footer */
+        footer {
+            text-align: center;
+            color: #000000;
+            font-size: 0.9em;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* Estilo do título da página */
+        .titulo h1 {
+            text-align: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .container h2 {
+                font-size: 18px;
+            }
+
+            .voltar-link {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .container h2 {
+                font-size: 16px;
+            }
+
+            .voltar-adicionar {
+                flex-direction: column;
+            }
+
+            .voltar-link {
+                font-size: 14px;
+                padding: 8px 12px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Cabeçalho do site, incluindo a barra de navegação -->
+    <header>
+        <%- include('./navbarAluno.ejs', { activePage: 'indicacao_livrosAluno' }) %>
+    </header>
+
+    <div class="titulo">
+        <h1>Detalhes da indicação do livro</h1>
+    </div>
+
+    <!-- Detalhes do indicacao_livro -->
+    <div class="container">
+        <h2>Título</h2>
+        <div class="indicacao_livro-detalhes">
+            <h3>
+                <%= indicacao_livro.titulo %>
+            </h3>
+        </div>
+
+        <h2>Autor</h2>
+        <div class="indicacao_livro-detalhes">
+            <h3>
+                <%= indicacao_livro.autor %>
+            </h3>
+        </div>
+
+        <h2>Gênero</h2>
+        <div class="indicacao_livro-detalhes">
+            <h3>
+                <%= indicacao_livro.genero %>
+            </h3>
+        </div>
+
+        <h2>Detalhes</h2>
+        <div class="indicacao_livro-detalhes">
+            <h3>
+                <%= indicacao_livro.descricao || 'Descrição não informada' %>
+            </h3>
+        </div>
+
+        <h2>Contribuinte que Recomendou</h2>
+        <div class="indicacao_livro-detalhes">
+            <h3>
+                <%= indicacao_livro.nome_usuario || 'Usuário não informado' %>
+            </h3>
+        </div>
+
+        <h2>Indicação</h2>
+        <div class="detalhes">
+            <h3>
+                <%= indicacao_livro.status_indicacao===1 ? 'Indicação Aceita' : 'Indicação Pendente' %>
+            </h3>
+        </div>
+
+        <!-- Ícone de seta para voltar -->
+        <div class="voltar-adicionar">
+            <a href="/armariosAdm" class="voltar-link">
+                <i class="fa fa-arrow-left"></i> Voltar
+            </a>
+            <a href="/armariosAdm" class="voltar-link">
+                <i class="fa fa-x"></i> Negar
+            </a>
+            <a href="/editarArmariosAdm" class="voltar-link">
+                <i class="fa fa-check"></i> Aprovar
+            </a>
+        </div>
+    </div>
+
+    <!-- Rodapé do site -->
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'indicacao_livrosAluno' }) %>
+    </footer>
+</body>
+
+</html>

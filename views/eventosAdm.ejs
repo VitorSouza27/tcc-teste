@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Eventos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+</head>
+<header>
+    <%- include('./navbar.ejs', { activePage: 'eventosAdm' }) %> <!-- Navbar -->
+</header>
+
+<body>
+    <div class="titulo">
+        <h1>Eventos</h1> <!-- Título da página -->
+    </div>
+    <div class="container">
+
+        <div class="calendar" id="calendar">
+            <div class="navigation">
+                <button id="prev-month" aria-label="Mês Anterior"><i class="fas fa-chevron-left"></i></button>
+                <div id="month-year"></div>
+                <button id="next-month" aria-label="Próximo Mês"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="weekdays">
+                <div class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div class="weekday">Sáb</div>
+            </div>
+            <div class="days" id="days"></div>
+        </div>
+        <div class="event-form">
+            <h3>Eventos: </h3>
+
+            <% evento.forEach(evento=> { %>
+                <div class="lista-evento">
+                    <span class="titulo-evento">
+                        <%= evento.nome_evento %>
+                    </span>
+                    <span class="titulo-detalhe">
+                        <%= evento.horario_evento %>,
+                            <%= new Date(evento.data).toLocaleDateString('pt-BR') %>,
+                                <%= evento.local_evento %>
+                    </span>
+
+                    <form action="/verEventoAdm" method="GET">
+                        <input type="hidden" name="eventoNome" value="<%= evento.nome_evento %>">
+                        <button class="botao-ver" type="submit">Editar</button>
+                    </form>
+                </div>
+                <% }); %> 
+                <form action="/adicionarEventosAdm" method="GET">
+                    <button class="add-event">Adicionar Evento</button>
+                </form>
+                
+                    
+        </div>
+    </div>
+</body>
+<footer>
+    <%- include('./footer.ejs', { activePage: 'eventosAdm' }) %>
+</footer>
+
+</html>
+<style>
+    /* Estilos básicos e layout */
+    body {
+        font-family: 'roboto', sans-serif;
+        justify-content: center;
+        background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat:repeat-y;
+    }
+
+     /* Faz com que o conteúdo ocupe o máximo possível sem empurrar o footer */
+     .container {
+        flex-grow: 1;
+        display: flex;
+        width: 50%;
+        max-width: 1200px;
+        margin: auto;
+        padding: 100px;
+    }
+    .footer{
+ position:fixed;
+ width: 100%;
+ height: auto;
+    }
+
+    .titulo {
+        border-bottom: 3px solid white;
+        text-align: center;
+        color: #fff;
+        padding: 20px;
+    }
+
+    .calendar {
+        flex: 2;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 10px;
+        margin-right: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-form {
+        flex: 2;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 10px;
+        padding-right: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        /* Adiciona espaço entre os elementos e o botão */
+    }
+
+    .event-form button {
+        display: flex;
+        /* Faz com que o botão vá para a parte inferior */
+    }
+
+    .event-form h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+
+    .titulo-evento {
+        color: #003366;
+        font-size: 18px;
+        display: flex;
+    }
+
+    .titulo-detalhe {
+        color: #888;
+        font-size: 14px;
+        display: block;
+    }
+
+    #events-list {
+
+        margin-top: 35px;
+    }
+
+    #events-list h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    #events-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #events-list li {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+    }
+
+    /* Oculta eventos não selecionados */
+    .event-item {
+        display: none;
+    }
+
+    /* Exibe eventos quando o dia está selecionado */
+    .day.selected .event-item {
+        display: none;
+    }
+
+    .event-item.visible {
+        display: block;
+    }
+
+    h3 {
+        margin: 0;
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="time"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    input[type="color"] {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+
+    button {
+        padding: 10px;
+        background-color: #003366;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        justify-content: center;
+        display: flex;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #004794;
+    }
+
+    #events-list ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #events-list li {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    .event-remove {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #ff0000;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .event-remove:hover {
+        text-decoration: underline;
+    }
+
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .navigation .arrow {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        font-size: 24px;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navigation .arrow:hover {
+        background-color: #0056b3;
+    }
+
+    #month-year {
+        font-size: 20px;
+        color: #333;
+    }
+
+    .weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        font-weight: bold;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .weekday {
+        padding: 10px;
+        background-color: #e9ecef;
+        border: 1px solid #ccc;
+    }
+
+    .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-auto-rows: 60px;
+        gap: 1px;
+        text-align: center;
+    }
+
+    .day {
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s;
+        box-sizing: border-box;
+    }
+
+    .day.empty {
+        background-color: #f9f9f9;
+    }
+
+    .day:hover {
+        background-color: #f0f0f0;
+        border-color: #bbb;
+    }
+
+    .day.selected {
+        background-color: #007bff;
+        color: white;
+        border-color: #0056b3;
+    }
+
+    .day.selected:hover {
+        background-color: #0056b3;
+    }
+
+    .event-marker {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #000000;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    .modal-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus {
+        color: black;
+        text-decoration: none;
+    }
+
+    .modal button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 5px;
+    }
+
+    .modal button:hover {
+        background-color: #ddd;
+    }
+
+    /* Ajuste específico para o campo de horário */
+    input[type="time"] {
+        width: calc(100% - 1px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-bottom: 10px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+</style>
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const monthYearElement = document.getElementById('month-year');
+        const daysElement = document.getElementById('days');
+        const prevMonthButton = document.getElementById('prev-month');
+        const nextMonthButton = document.getElementById('next-month');
+
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth();
+
+        function generateCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            let calendarHTML = '';
+
+            monthYearElement.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${year}`;
+
+            // Add days of the month
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                calendarHTML += `<div class="day" data-date="${date}">${day}</div>`;
+            }
+
+            // Add empty cells for the beginning of the month
+            const firstDayWeekday = firstDay.getDay();
+            for (let i = 0; i < firstDayWeekday; i++) {
+                calendarHTML = `<div class="day empty"></div>` + calendarHTML;
+            }
+
+            // Fill remaining cells in the last week
+            const lastDayWeekday = lastDay.getDay();
+            const daysToFill = (lastDayWeekday < 6) ? 6 - lastDayWeekday : 0;
+            for (let i = 0; i < daysToFill; i++) {
+                calendarHTML += '<div class="day empty"></div>';
+            }
+
+            daysElement.innerHTML = calendarHTML;
+        }
+
+        prevMonthButton.addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentYear, currentMonth);
+        });
+
+        nextMonthButton.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentYear, currentMonth);
+        });
+
+        // Initial calendar generation
+        generateCalendar(currentYear, currentMonth);
+    });
+
+</script>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="login-section">
+            <h2>Faça seu login!</h2>
+
+            <form action="/login" method="POST">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="Digite seu email">
+
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+
+                <button type="submit">Entrar</button>
+                <a href="#">Esqueci minha senha</a>
+                <!-- Verifica se existe uma mensagem de erro e a exibe -->
+                <% if (typeof errorMessage !=='undefined' ) { %>
+                    <p class="error-message">
+                        <%= errorMessage %>
+                    </p>
+                    <% } %>
+            </form>
+        </div>
+        <div class="image-section">
+            <img src="./img/aapm_logo_branca.png" alt="Imagem ao lado">
+            <a href="https://web.whatsapp.com/" target="_blank">
+                <button class="contact-btn">Contate-nos</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .error-message {
+        color: red;
+        text-align: center;
+        font-size: 25px;
+        margin-top: 10px;
+    }
+
+    body {
+        background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+        /* Aplica uma sobreposição escura */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        box-sizing: border-box;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        max-width: 1200px;
+        /* Aumentado o tamanho total da caixa */
+        width: 100%;
+    }
+
+    .login-section {
+        padding: 60px;
+        /* Aumenta o padding interno */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 60%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        /* Sombreamento */
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #0c1a4b;
+        font-weight: 600;
+        font-size: 28px;
+        /* Aumenta o tamanho do título */
+    }
+
+    label {
+        margin-top: 10px;
+        color: #333;
+        font-size: 16px;
+        /* Aumenta o tamanho do texto das labels */
+    }
+
+    input {
+        width: 100%;
+        padding: 16px;
+        /* Aumenta o tamanho do input */
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        /* Aumenta o tamanho da fonte nos inputs */
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 8px rgba(13, 110, 253, 0.3);
+    }
+
+    button {
+        width: 100%;
+        padding: 16px;
+        /* Aumenta o tamanho do botão */
+        margin-top: 20px;
+        background-color: #0d6efd;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        /* Aumenta o tamanho da fonte do botão */
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    a {
+        text-align: center;
+        display: block;
+        margin-top: 20px;
+        color: #0d6efd;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .image-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #0c1a4b;
+        width: 40%;
+        padding: 60px;
+        /* Aumenta o padding da seção de imagem */
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        /* Sombreamento */
+    }
+
+    .image-section img {
+        max-width: 90%;
+        /* Aumenta a imagem */
+        height: auto;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        margin-bottom: 20px;
+    }
+
+    .contact-btn {
+        background-color: transparent;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 12px 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 18px;
+        /* Aumenta o tamanho da fonte do botão de contato */
+    }
+
+    .contact-btn:hover {
+        background-color: #fff;
+        color: #0c1a4b;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-section,
+        .image-section {
+            width: 100%;
+            padding: 40px;
+        }
+
+        .login-section {
+            margin: 20px;
+            /* Adiciona margem em torno da seção de login */
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .image-section {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            /* Sombreamento */
+        }
+
+        .image-section img {
+            width: 80%;
+        }
+    }
+</style>

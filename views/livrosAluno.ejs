@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livros</title>
+    <link rel="icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+    <style>
+        /* Estilos globais */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-image: linear-gradient(rgba(0, 13, 56, 0.5), rgba(0, 13, 56, 0.5)), url('./img/foto_fundo.png');
+            /* Aplica uma sobreposição escura */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        footer {
+            color: white;
+            text-align: center;
+         
+        }
+
+        .container {
+            min-height: calc(100vh - 60px);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .titulo {
+            border-bottom: 3px solid white;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .titulo h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .botao-indicacao-pesquisa {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .adicionar-indicacao {
+            height: 50px;
+            font-size: 20px;
+            padding: 2px 20px;
+            background: none;
+            color: #fff;
+            border-radius: 10px;
+            border: 2px solid #ffffff;
+            transition: 0.6s;
+            margin-bottom: 10px;
+        }
+
+        .adicionar-indicacao:hover {
+            background-color: #2d3f52;
+            color: #fff;
+            border: 2px solid white;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .search-bar input {
+            padding: 25px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            width: 200px;
+            height: 30px;
+            font-size: 16px;
+        }
+
+        .search-icon-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(151, 151, 151);
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .search-icon-box i {
+            color: #ffffff;
+        }
+
+        .search-icon-box:hover {
+            background-color: rgb(94, 94, 94);
+        }
+
+        .lista-livro {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: #003366;
+            padding: 15px;
+            border-radius: 5px;
+            flex-wrap: wrap;
+        }
+
+        .titulo-livro {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .botao-ver {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .botao-ver:hover {
+            background-color: #002244;
+        }
+
+        .sem-resultados {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .botao-indicacao-pesquisa {
+                flex-direction: column;
+            }
+
+            .adicionar-indicacao,
+            .search-bar {
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: calc(100% - 50px);
+                font-size: 14px;
+            }
+
+            .lista-livro {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .botao-ver {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .titulo h1 {
+                font-size: 28px;
+            }
+
+            .adicionar-indicacao {
+                font-size: 16px;
+                padding: 5px 15px;
+            }
+
+            .search-bar input {
+                font-size: 14px;
+            }
+
+            .lista-livro {
+                padding: 10px;
+            }
+
+            .botao-ver {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <%- include('./navbarAluno.ejs', { activePage: 'livrosAluno' }) %>
+    </header>
+
+    <div class="container">
+        <div class="titulo">
+            <h1>Livros</h1>
+        </div>
+
+        <div class="botao-indicacao-pesquisa">
+            <form action="/indicarLivroAluno" method="GET">
+                <button class="adicionar-indicacao" id="adicionar-indicacao">Indicar Livro</button>
+            </form>
+            <form action="/pesquisarLivro" method="GET">
+                <div class="search-bar">
+                    <input type="text" id="search-input" name="pesquisarLivro" placeholder="Pesquisar">
+                    <button type="submit" class="search-icon-box">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <% if (livros.length === 0) { %>
+            <div class="sem-resultados">
+                <p>A pesquisa não correspondeu a nenhum livro.</p>
+            </div>
+        <% } else { %>
+            <% livros.forEach(livro => { %>
+                <div class="lista-livro">
+                    <span class="titulo-livro">
+                        <%= livro.titulo %>
+                    </span>
+                    <form action="/verLivroAluno" method="GET">
+                        <input type="hidden" name="tituloLivro" value="<%= livro.titulo %>">
+                        <button class="botao-ver" type="submit">Ver</button>
+                    </form>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+
+    <footer>
+        <%- include('./footer.ejs', { activePage: 'livrosAluno' }) %>
+    </footer>
+</body>
+
+</html>

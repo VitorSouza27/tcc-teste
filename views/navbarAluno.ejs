@@ -1,0 +1,162 @@
+<nav>
+    <div class="logo">
+        <img src="../img/aapm_logo_cortada.png" alt="Logo">
+    </div>
+
+    <div class="menu-btn">
+        <i class="fa fa-bars fa-2x" onclick="menuShow()"></i>
+    </div>
+
+    <ul>
+        <li> <a class="nav-item <%= activePage === 'ocorrenciasAluno' ? 'active' : '' %>" href="/solicitacoesAluno"> Solicitações</a> </li>
+        <li> <a class="nav-item <%= activePage === 'ocorrenciasAluno' ? 'active' : '' %>" href="/EventosAluno"> Eventos</a> </li>
+        <li> <a class="nav-item <%= activePage === 'livrosAluno' ? 'active' : '' %>" href="/livrosAluno"> Livros</a> </li>
+        <li> <a class="nav-item <%= activePage === 'materiaisAluno' ? 'active' : '' %>" href="/materiaisAluno"> Materiais</a> </li>
+        <li> <a class="nav-item <%= activePage === 'ocorrenciasAluno' ? 'active' : '' %>" href="/ocorrenciasAluno"> Ocorrências</a> </li>
+        <li> <a href="#"> Trocar Senha</a> </li>
+        <li> <a href="/sair"> Sair</a> </li>
+    </ul>
+</nav>
+<script src="main.js"></script>
+</body>
+</html>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,200;1,300;1,400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    display: flex;
+    height: 80px;
+    width: 100%;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px; /* Ajustado para espaço interno */
+    flex-wrap: wrap;
+}
+
+nav .logo {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+}
+
+nav .logo img {
+    height: 50px; /* Ajuste a altura conforme necessário */
+    width: auto; /* Mantém a proporção da imagem */
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-left: auto; /* Empurra a lista para a direita */
+}
+
+nav ul li {
+    margin: 0 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adiciona animação nas transições */
+}
+
+nav ul li:hover {
+    transform: translateY(-5px); /* Leve elevação ao passar o mouse */
+}
+
+nav ul li a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transição suave */
+}
+
+nav ul li a:hover {
+    background: #0773ee;
+    color: #ffffff; /* Define a cor do texto como branco no hover */
+    transform: scale(1.05); /* Aumenta ligeiramente o tamanho do link */
+}
+
+nav .menu-btn i {
+    color: #0a0a0a;
+    cursor: pointer;
+    display: none;
+    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
+}
+
+nav .menu-btn i:hover {
+    color: #0773ee; /* Muda a cor do ícone no hover */
+}
+
+@media (max-width: 1383px) {
+    nav .menu-btn i {
+        display: block;
+    }
+
+    nav ul {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        background-color: #f5f8f8;
+        height: 100vh;
+        width: 100%;
+        text-align: center;
+        display: block;
+        transition: left 0.3s ease; /* Transição suave para o movimento lateral */
+    }
+
+    nav ul.open {
+        left: 0;
+    }
+
+    nav ul li {
+        width: 100%;
+        margin: 50px 0;
+    }
+
+    /* Removi a sombra no estado hover do responsivo */
+    nav ul li:hover {
+        transform: translateY(-5px); /* Mantém o efeito de elevação */
+    }
+
+    nav ul li a {
+        font-size: 23px;
+        transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+    }
+
+    nav ul li a:hover {
+        background: #0773ee;
+        color: #ffffff; /* Define a cor do texto como branco no hover para o menu lateral */
+        transform: scale(1.05); /* Aumenta ligeiramente o tamanho do link */
+    }
+}
+
+/* Classe para desabilitar o scroll */
+.no-scroll {
+    overflow: hidden; /* Desabilita o scroll */
+}
+</style>
+
+<script>
+var ul = document.querySelector('nav ul');
+var menuBtn = document.querySelector('.menu-btn i');
+var body = document.body; // Seleciona o body
+
+function menuShow() {
+    if (ul.classList.contains('open')) {
+        ul.classList.remove('open');
+        body.classList.remove('no-scroll'); // Remove a classe que desabilita o scroll
+    } else {
+        ul.classList.add('open');
+        body.classList.add('no-scroll'); // Adiciona a classe que desabilita o scroll
+    }
+}
+</script>
